@@ -63,7 +63,9 @@ export function createWebSendApi(params: {
       } else {
         payload = { text };
       }
-      const result = await params.sock.sendMessage(jid, payload);
+      const finalPayload: AnyMessageContent =
+        sendOptions?.viewOnce && mediaBuffer ? { ...payload, viewOnce: true } : payload;
+      const result = await params.sock.sendMessage(jid, finalPayload);
       const accountId = sendOptions?.accountId ?? params.defaultAccountId;
       recordWhatsAppOutbound(accountId);
       const messageId = resolveOutboundMessageId(result);

@@ -291,13 +291,14 @@ export const whatsappPlugin: ChannelPlugin<ResolvedWhatsAppAccount> = {
     pollMaxOptions: 12,
     resolveTarget: ({ to, allowFrom, mode }) =>
       resolveWhatsAppOutboundTarget({ to, allowFrom, mode }),
-    sendText: async ({ cfg, to, text, accountId, deps, gifPlayback }) => {
+    sendText: async ({ cfg, to, text, accountId, deps, gifPlayback, viewOnce }) => {
       const send = deps?.sendWhatsApp ?? getWhatsAppRuntime().channel.whatsapp.sendMessageWhatsApp;
       const result = await send(to, text, {
         verbose: false,
         cfg,
         accountId: accountId ?? undefined,
         gifPlayback,
+        viewOnce,
       });
       return { channel: "whatsapp", ...result };
     },
@@ -310,6 +311,7 @@ export const whatsappPlugin: ChannelPlugin<ResolvedWhatsAppAccount> = {
       accountId,
       deps,
       gifPlayback,
+      viewOnce,
     }) => {
       const send = deps?.sendWhatsApp ?? getWhatsAppRuntime().channel.whatsapp.sendMessageWhatsApp;
       const result = await send(to, text, {
@@ -319,6 +321,7 @@ export const whatsappPlugin: ChannelPlugin<ResolvedWhatsAppAccount> = {
         mediaLocalRoots,
         accountId: accountId ?? undefined,
         gifPlayback,
+        viewOnce,
       });
       return { channel: "whatsapp", ...result };
     },
