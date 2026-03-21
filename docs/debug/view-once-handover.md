@@ -1,4 +1,4 @@
-# WhatsApp View-Once Handover
+# Walkthrough: Multi-Channel View-Once Media Support
 
 ## Final Resolution (FIXED)
 

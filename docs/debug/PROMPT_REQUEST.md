@@ -1,4 +1,4 @@
-# Prompt Request: Cross-Channel View-Once Media Support
+# Prompt Request: Multi-Channel View-Once Media Support
 
 > [!NOTE]
 > **AI-Assisted Contribution**
@@ -10,9 +10,9 @@ Enable full "View-Once" media support across WhatsApp and Signal. Currently, Ope
 
 ## Technical Rationale
 
-1.  **WhatsApp Extension Gap**: The primary WhatsApp extension (`extensions/whatsapp/src/channel.ts`) was missing the destructuring of `viewOnce`. Added support for both `sendText` and `sendMedia`.
-2.  **Signal Implementation**: Updated `src/channels/plugins/outbound/signal.ts` to correctly handle `viewOnce` for media payloads, providing feature parity across channels.
-3.  **Pipeline Propagation**: `src/infra/outbound/deliver.ts` needed explicit handling to ensure `viewOnce` from the effective payload (whether from AI tools or `[[view_once]]` tags) correctly reaches the final adapter.
+1.  **WhatsApp Extension Gap**: The primary WhatsApp extension (`extensions/whatsapp/src/channel.ts`) was missing the destructuring of `viewOnce`. Added support for `sendMedia` and ensured `sendText` remains standard (reflecting that WhatsApp only supports View-Once for media).
+2.  **Signal Implementation**: Updated `src/channels/plugins/outbound/signal.ts` to correctly handle `viewOnce` for media payloads, providing feature parity across channels with appropriate protocol guards.
+3.  **Pipeline Propagation**: `src/infra/outbound/deliver.ts` needed explicit handling to ensure `viewOnce` from the effective payload correctly reaches the final adapter.
 4.  **Protocol Reliability (WA)**: Added a hook in `src/web/session.ts` to automatically upgrade V1 view-once payloads to V2, ensuring reliability across modern clients and Baileys versions.
 
 ## Scope of Changes
@@ -30,4 +30,4 @@ Enable full "View-Once" media support across WhatsApp and Signal. Currently, Ope
 
 ## Prompt for Agent Merge
 
-"Review the `feat/view-once-final` branch. It implements cross-channel View-Once support for WhatsApp and Signal by fixing parameter propagation in the adapters and adding a WhatsApp V2 protocol upgrade hook. Verify the core delivery pipeline changes and ensure feature parity across both channels. Confirm no infrastructure-specific leaks or debug traces are present."
+"Review the `feat/view-once-final` branch. It implements multi-channel View-Once support for WhatsApp and Signal by fixing parameter propagation in the adapters and adding a WhatsApp V2 protocol upgrade hook. Verify the core delivery pipeline changes and ensure feature parity across both channels. Confirm no infrastructure-specific leaks or debug traces are present."

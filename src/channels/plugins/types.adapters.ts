@@ -99,6 +99,7 @@ export type ChannelOutboundContext = {
   identity?: OutboundIdentity;
   deps?: OutboundSendDeps;
   silent?: boolean;
+  viewOnce?: boolean;
 };
 
 export type ChannelOutboundPayloadContext = ChannelOutboundContext & {
